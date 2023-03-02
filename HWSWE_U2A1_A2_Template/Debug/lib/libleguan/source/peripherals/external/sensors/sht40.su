@@ -1,0 +1,5 @@
+intrinsics.h:70:13:LEGUAN_Unreachable	4	static
+sht40.c:51:10:SHT40_Init	8	static
+sht40.c:59:17:GetSensorData	24	static
+sht40.c:83:10:SHT40_GetTemperature	24	static
+sht40.c:97:10:SHT40_GetHumidity	24	static

@@ -1,0 +1,6 @@
+math.c:30:10:MATH_ClampUl	24	static
+math.c:37:9:MATH_ClampL	24	static
+math.c:44:11:MATH_ClampF	24	static
+math.c:51:11:MATH_ClampD	32	static
+math.c:58:8:MATH_Sign	16	static
+math.c:67:9:MATH_BinaryToBCD	16	static

@@ -1,0 +1,7 @@
+i2c.c:34:10:I2C_Init	4	static
+i2c.c:40:10:I2C_Write	24	static
+i2c.c:47:10:I2C_WriteRegister	32	static
+i2c.c:55:10:I2C_Read	24	static
+i2c.c:65:10:I2C_ReadBuffer	32	static
+i2c.c:72:10:I2C_ReadRegister	24	static
+i2c.c:85:10:I2C_ReadRegisterBuffer	32	static

@@ -1,0 +1,2 @@
+dac.c:34:10:DAC_Init	16	static
+dac.c:46:10:DAC_SetValue	32	static

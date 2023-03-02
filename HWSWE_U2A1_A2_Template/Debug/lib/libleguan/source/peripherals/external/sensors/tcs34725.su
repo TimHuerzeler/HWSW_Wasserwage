@@ -1,0 +1,9 @@
+intrinsics.h:70:13:LEGUAN_Unreachable	4	static
+tcs34725.c:89:17:SetIntegrationTime	16	static
+tcs34725.c:95:17:SetGain	16	static
+tcs34725.c:101:17:Enable	16	static
+tcs34725.c:111:17:Disable	16	static
+tcs34725.c:120:17:StartConversion	16	static
+tcs34725.c:129:13:IsDone	16	static
+tcs34725.c:138:10:TC3A227E_Init	8	static
+tcs34725.c:148:10:TC3A227E_GetColor	24	static
