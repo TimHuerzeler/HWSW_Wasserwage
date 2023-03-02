@@ -1,5 +1,5 @@
-intrinsics.h:70:13:LEGUAN_Unreachable	4	static
-spi.c:41:10:SPI_Init	16	static
-spi.c:48:10:SPI_Read	24	static
-spi.c:58:10:SPI_Write	24	static
-spi.c:68:10:SPI_WriteRead	32	static
+../lib/libleguan/include/common/intrinsics.h:70:13:LEGUAN_Unreachable	4	static
+../lib/libleguan/source/peripherals/internal/spi.c:41:10:SPI_Init	16	static
+../lib/libleguan/source/peripherals/internal/spi.c:48:10:SPI_Read	24	static
+../lib/libleguan/source/peripherals/internal/spi.c:58:10:SPI_Write	24	static
+../lib/libleguan/source/peripherals/internal/spi.c:68:10:SPI_WriteRead	32	static

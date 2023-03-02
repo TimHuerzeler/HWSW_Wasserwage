@@ -1,2 +1,2 @@
-intrinsics.h:70:13:LEGUAN_Unreachable	4	static
-leguan.c:30:10:LEGUAN_Init	8	static
+../lib/libleguan/include/common/intrinsics.h:70:13:LEGUAN_Unreachable	4	static
+../lib/libleguan/source/leguan.c:30:10:LEGUAN_Init	8	static

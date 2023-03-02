@@ -1,7 +1,7 @@
-core_cm7.h:2156:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
-core.c:35:6:CORE_Delay	16	static
-core.c:39:21:CORE_GetSerialNumber	24	static
-core.c:45:6:CORE_Reset	8	static
-core.c:49:6:CORE_EnableInterrupts	4	static,ignoring_inline_asm
-core.c:53:6:CORE_DisableInterrupts	4	static,ignoring_inline_asm
-core.c:57:6:CORE_ClearPendingInterrupts	16	static
+../lib/hal/Drivers/CMSIS/Include/core_cm7.h:2156:34:__NVIC_SystemReset	4	static,ignoring_inline_asm
+../lib/libleguan/source/common/core.c:35:6:CORE_Delay	16	static
+../lib/libleguan/source/common/core.c:39:21:CORE_GetSerialNumber	24	static
+../lib/libleguan/source/common/core.c:45:6:CORE_Reset	8	static
+../lib/libleguan/source/common/core.c:49:6:CORE_EnableInterrupts	4	static,ignoring_inline_asm
+../lib/libleguan/source/common/core.c:53:6:CORE_DisableInterrupts	4	static,ignoring_inline_asm
+../lib/libleguan/source/common/core.c:57:6:CORE_ClearPendingInterrupts	16	static

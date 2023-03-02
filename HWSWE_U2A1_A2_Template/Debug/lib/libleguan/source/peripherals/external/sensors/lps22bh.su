@@ -1,4 +1,4 @@
-lps22bh.c:75:10:LPS22BH_Init	16	static
-lps22bh.c:89:17:StartConversion	16	static
-lps22bh.c:107:10:LPS22BH_GetTemperature	24	static
-lps22bh.c:123:10:LPS22BH_GetPressure	24	static
+../lib/libleguan/source/peripherals/external/sensors/lps22bh.c:75:10:LPS22BH_Init	16	static
+../lib/libleguan/source/peripherals/external/sensors/lps22bh.c:89:17:StartConversion	16	static
+../lib/libleguan/source/peripherals/external/sensors/lps22bh.c:107:10:LPS22BH_GetTemperature	24	static
+../lib/libleguan/source/peripherals/external/sensors/lps22bh.c:123:10:LPS22BH_GetPressure	24	static

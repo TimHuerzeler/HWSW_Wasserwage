@@ -1,6 +1,6 @@
-adc.c:37:27:GetHandle	16	static
-adc.c:52:16:GetResolution	24	static
-adc.c:66:10:ADC_Init	4	static
-adc.c:72:10:ADC_StartMeasurement	48	static
-adc.c:103:6:ADC_IsReady	16	static
-adc.c:107:10:ADC_GetValue	32	static
+../lib/libleguan/source/peripherals/internal/adc.c:37:27:GetHandle	16	static
+../lib/libleguan/source/peripherals/internal/adc.c:52:16:GetResolution	24	static
+../lib/libleguan/source/peripherals/internal/adc.c:66:10:ADC_Init	4	static
+../lib/libleguan/source/peripherals/internal/adc.c:72:10:ADC_StartMeasurement	48	static
+../lib/libleguan/source/peripherals/internal/adc.c:103:6:ADC_IsReady	16	static
+../lib/libleguan/source/peripherals/internal/adc.c:107:10:ADC_GetValue	32	static

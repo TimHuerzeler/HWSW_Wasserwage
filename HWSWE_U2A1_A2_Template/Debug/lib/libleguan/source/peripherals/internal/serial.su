@@ -1,4 +1,4 @@
-serial.c:36:10:SERIAL_Init	4	static
-serial.c:43:6:SERIAL_Stream	16	static
-serial.c:50:10:SERIAL_Read	24	static
-serial.c:63:10:SERIAL_Write	16	static
+../lib/libleguan/source/peripherals/internal/serial.c:36:10:SERIAL_Init	4	static
+../lib/libleguan/source/peripherals/internal/serial.c:43:6:SERIAL_Stream	16	static
+../lib/libleguan/source/peripherals/internal/serial.c:50:10:SERIAL_Read	24	static
+../lib/libleguan/source/peripherals/internal/serial.c:63:10:SERIAL_Write	16	static

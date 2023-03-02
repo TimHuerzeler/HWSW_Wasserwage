@@ -1,7 +1,7 @@
-sensors.c:34:10:SENSOR_Init	8	static
-sensors.c:44:10:SENSOR_GetTemperature	16	static
-sensors.c:48:10:SENSOR_GetPressure	16	static
-sensors.c:52:10:SENSOR_GetHumidity	16	static
-sensors.c:56:10:SENSOR_GetColor	16	static
-sensors.c:60:10:SENSOR_GetAcceleration	16	static
-sensors.c:64:10:SENSOR_GetRotation	16	static
+../lib/libleguan/source/peripherals/external/sensors.c:34:10:SENSOR_Init	8	static
+../lib/libleguan/source/peripherals/external/sensors.c:44:10:SENSOR_GetTemperature	16	static
+../lib/libleguan/source/peripherals/external/sensors.c:48:10:SENSOR_GetPressure	16	static
+../lib/libleguan/source/peripherals/external/sensors.c:52:10:SENSOR_GetHumidity	16	static
+../lib/libleguan/source/peripherals/external/sensors.c:56:10:SENSOR_GetColor	16	static
+../lib/libleguan/source/peripherals/external/sensors.c:60:10:SENSOR_GetAcceleration	16	static
+../lib/libleguan/source/peripherals/external/sensors.c:64:10:SENSOR_GetRotation	16	static

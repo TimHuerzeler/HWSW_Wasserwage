@@ -1,5 +1,5 @@
-icm42605.c:177:17:write	24	static
-icm42605.c:187:17:writeRead	32	static
-icm42605.c:197:10:ICM42605_Init	136	static
-icm42605.c:344:10:ICM42605_GetRotation	32	static
-icm42605.c:360:10:ICM42605_GetAcceleration	32	static
+../lib/libleguan/source/peripherals/external/sensors/icm42605.c:177:17:write	24	static
+../lib/libleguan/source/peripherals/external/sensors/icm42605.c:187:17:writeRead	32	static
+../lib/libleguan/source/peripherals/external/sensors/icm42605.c:197:10:ICM42605_Init	136	static
+../lib/libleguan/source/peripherals/external/sensors/icm42605.c:344:10:ICM42605_GetRotation	32	static
+../lib/libleguan/source/peripherals/external/sensors/icm42605.c:360:10:ICM42605_GetAcceleration	32	static

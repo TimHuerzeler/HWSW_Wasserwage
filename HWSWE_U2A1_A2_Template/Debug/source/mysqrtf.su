@@ -1,5 +1,5 @@
-mysqrtf.c:19:19:rep_clz	16	static
-mysqrtf.c:23:21:toRep	24	static
-mysqrtf.c:28:20:fromRep	24	static
-mysqrtf.c:33:24:mulhi	24	static
-mysqrtf.c:37:6:my_sqrtf	80	static
+../source/mysqrtf.c:19:19:rep_clz	16	static
+../source/mysqrtf.c:23:21:toRep	24	static
+../source/mysqrtf.c:28:20:fromRep	24	static
+../source/mysqrtf.c:33:24:mulhi	32	static
+../source/mysqrtf.c:37:6:my_sqrtf	80	static

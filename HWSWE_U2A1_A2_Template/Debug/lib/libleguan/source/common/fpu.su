@@ -1,4 +1,4 @@
-fpu.c:32:11:FPU_abs32	24	static,ignoring_inline_asm
-fpu.c:39:11:FPU_abs64	24	static,ignoring_inline_asm
-fpu.c:46:11:FPU_sqrt32	24	static,ignoring_inline_asm
-fpu.c:53:11:FPU_sqrt64	24	static,ignoring_inline_asm
+../lib/libleguan/source/common/fpu.c:32:11:FPU_abs32	24	static,ignoring_inline_asm
+../lib/libleguan/source/common/fpu.c:39:11:FPU_abs64	24	static,ignoring_inline_asm
+../lib/libleguan/source/common/fpu.c:46:11:FPU_sqrt32	24	static,ignoring_inline_asm
+../lib/libleguan/source/common/fpu.c:53:11:FPU_sqrt64	24	static,ignoring_inline_asm

@@ -1,7 +1,7 @@
-gpio.c:30:10:GPIO_Init	48	static
-gpio.c:46:6:GPIO_SetSpeed	32	static
-gpio.c:55:6:GPIO_SetPullResistor	32	static
-gpio.c:64:6:GPIO_SetMode	32	static
-gpio.c:73:6:GPIO_GetValue	24	static
-gpio.c:82:6:GPIO_SetValue	24	static
-gpio.c:92:6:GPIO_Toggle	16	static
+../lib/libleguan/source/peripherals/internal/gpio.c:30:10:GPIO_Init	48	static
+../lib/libleguan/source/peripherals/internal/gpio.c:46:6:GPIO_SetSpeed	32	static
+../lib/libleguan/source/peripherals/internal/gpio.c:55:6:GPIO_SetPullResistor	32	static
+../lib/libleguan/source/peripherals/internal/gpio.c:64:6:GPIO_SetMode	32	static
+../lib/libleguan/source/peripherals/internal/gpio.c:73:6:GPIO_GetValue	24	static
+../lib/libleguan/source/peripherals/internal/gpio.c:82:6:GPIO_SetValue	24	static
+../lib/libleguan/source/peripherals/internal/gpio.c:92:6:GPIO_Toggle	16	static

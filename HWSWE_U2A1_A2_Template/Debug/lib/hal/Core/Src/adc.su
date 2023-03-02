@@ -1,5 +1,5 @@
-adc.c:32:6:MX_ADC1_Init	48	static
-adc.c:92:6:MX_ADC2_Init	40	static
-adc.c:144:6:MX_ADC3_Init	40	static
-adc.c:198:6:HAL_ADC_MspInit	248	static
-adc.c:306:6:HAL_ADC_MspDeInit	16	static
+../lib/hal/Core/Src/adc.c:32:6:MX_ADC1_Init	48	static
+../lib/hal/Core/Src/adc.c:92:6:MX_ADC2_Init	40	static
+../lib/hal/Core/Src/adc.c:144:6:MX_ADC3_Init	40	static
+../lib/hal/Core/Src/adc.c:198:6:HAL_ADC_MspInit	248	static
+../lib/hal/Core/Src/adc.c:306:6:HAL_ADC_MspDeInit	16	static

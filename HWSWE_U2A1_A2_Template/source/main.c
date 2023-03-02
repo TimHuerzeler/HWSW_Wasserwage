@@ -46,6 +46,7 @@ int main(void)
     uint32_t start_tick;        /* tick count when starting calculation */
     uint32_t end_tick;          /* tick count when calculation done */
     uint32_t time_loop;         /* measures time for loop only */
+    char array[];
     float res;                  /* result of sqrt */
     float value = 25.0F;        /* operand for sprt() */
     uint32_t i;                 /* loop variable */
@@ -68,15 +69,22 @@ int main(void)
         }
         end_tick = HAL_GetTick();
         time_loop = end_tick - start_tick;
-        LOG_Info("Time to do a loop in ns: %d", time_loop);
+        snprintf(text, "Time to do a loop in ns: %d", (unsigned int)time_loop);
+        LCD_String(0, 100, text);
 
         /* measure sqrtf() using FPU and print result */
         /* put your code here */
         asm volatile("vsqrt.f32 %0, %1" : "=w" (res) : "w" (value));
 
         /* measure sqrtf() using library function and print result */
-        /* put your code here */
-        res = my_sqrtf(value);
+        start_tick = HAL_GetTick();
+        for (i=0; i<NBR_LOOPS; i++){
+        	res = my_sqrtf(value);
+        	}
+        end_tick = HAL_GetTick();
+        time_lib = end_tick - start_tick - time_loop;
+        snprintf(text, "Time with library function: %d", (unsigned int)time_lib);
+        LCD_String(0, 100, text);
     }
 
     return (0);

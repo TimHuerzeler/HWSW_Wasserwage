@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 -include ../makefile.init
@@ -57,14 +57,14 @@ BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ART
 EXECUTABLES += \
 HWSWE_U2A1_A2_Template.elf \
 
+MAP_FILES += \
+HWSWE_U2A1_A2_Template.map \
+
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
 HWSWE_U2A1_A2_Template.list \
-
-OBJCOPY_BIN += \
-HWSWE_U2A1_A2_Template.bin \
 
 
 # All Target
@@ -74,8 +74,8 @@ all: main-build
 main-build: HWSWE_U2A1_A2_Template.elf secondary-outputs
 
 # Tool invocations
-HWSWE_U2A1_A2_Template.elf: $(OBJS) $(USER_OBJS) C:\local_data\Git\HWSWE-LEGUAN\Uebungen\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "HWSWE_U2A1_A2_Template.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\local_data\Git\HWSWE-LEGUAN\Uebungen\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HWSWE_U2A1_A2_Template.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+HWSWE_U2A1_A2_Template.elf HWSWE_U2A1_A2_Template.map: $(OBJS) $(USER_OBJS) C:\Users\Tim\Documents\Studium\4.Semester\HWSW\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "HWSWE_U2A1_A2_Template.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Tim\Documents\Studium\4.Semester\HWSW\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HWSWE_U2A1_A2_Template.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -89,17 +89,12 @@ HWSWE_U2A1_A2_Template.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOO
 	@echo 'Finished building: $@'
 	@echo ' '
 
-HWSWE_U2A1_A2_Template.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "HWSWE_U2A1_A2_Template.bin"
-	@echo 'Finished building: $@'
-	@echo ' '
-
 # Other Targets
 clean:
-	-$(RM) HWSWE_U2A1_A2_Template.bin HWSWE_U2A1_A2_Template.elf HWSWE_U2A1_A2_Template.list default.size.stdout
+	-$(RM) HWSWE_U2A1_A2_Template.elf HWSWE_U2A1_A2_Template.list HWSWE_U2A1_A2_Template.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

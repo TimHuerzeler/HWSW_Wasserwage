@@ -1,1 +1,1 @@
-cube.c:21:6:CUBEMX_Init	24	static,ignoring_inline_asm
+../lib/hal/Core/Src/cube.c:21:6:CUBEMX_Init	24	static,ignoring_inline_asm
