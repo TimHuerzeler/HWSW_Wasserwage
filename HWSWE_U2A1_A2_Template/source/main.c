@@ -73,8 +73,14 @@ int main(void)
         LCD_String(0, 100, text);
 
         /* measure sqrtf() using FPU and print result */
-        /* put your code here */
-        asm volatile("vsqrt.f32 %0, %1" : "=w" (res) : "w" (value));
+        start_tick = HAL_GetTick();
+        for (i=0; i<NBR_LOOPS; i++){
+        	asm volatile("vsqrt.f32 %0, %1" : "=w" (res) : "w" (value));
+        	}
+        end_tick = HAL_GetTick();
+        time_lib = end_tick - start_tick - time_loop;
+        snprintf(text, "Time with FPU function: %d", (unsigned int)time_lib, res);
+        LCD_String(0, 100, text);
 
         /* measure sqrtf() using library function and print result */
         start_tick = HAL_GetTick();
@@ -83,7 +89,7 @@ int main(void)
         	}
         end_tick = HAL_GetTick();
         time_lib = end_tick - start_tick - time_loop;
-        snprintf(text, "Time with library function: %d", (unsigned int)time_lib);
+        snprintf(text, "Time with library function: %d", (unsigned int)time_lib, res);
         LCD_String(0, 100, text);
     }
 
