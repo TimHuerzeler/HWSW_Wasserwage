@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/lvgl/lvgl
+	branch = master
+	commit = ee65410c3725070ed1779c95fb8742107cdd9267
+	parent = 240eedd14bd51aece7d0cfe8a8713fbb0bd06dc4
+	method = merge
+	cmdver = 0.4.3

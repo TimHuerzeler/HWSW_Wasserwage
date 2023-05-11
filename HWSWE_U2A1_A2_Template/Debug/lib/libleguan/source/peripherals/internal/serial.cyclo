@@ -1,0 +1,4 @@
+serial.c:36:10:SERIAL_Init	1
+serial.c:43:6:SERIAL_Stream	2
+serial.c:50:10:SERIAL_Read	4
+serial.c:63:10:SERIAL_Write	3

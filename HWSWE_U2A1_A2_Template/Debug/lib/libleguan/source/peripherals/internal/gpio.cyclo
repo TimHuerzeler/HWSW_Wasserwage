@@ -1,0 +1,7 @@
+gpio.c:30:10:GPIO_Init	1
+gpio.c:46:6:GPIO_SetSpeed	1
+gpio.c:55:6:GPIO_SetPullResistor	1
+gpio.c:64:6:GPIO_SetMode	1
+gpio.c:73:6:GPIO_GetValue	2
+gpio.c:82:6:GPIO_SetValue	3
+gpio.c:92:6:GPIO_Toggle	1

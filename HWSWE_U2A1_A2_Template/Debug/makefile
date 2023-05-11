@@ -48,34 +48,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := HWSWE_U2A1_A2_Template
+BUILD_ARTIFACT_NAME := HWSWE_U2A1_A2
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-HWSWE_U2A1_A2_Template.elf \
+HWSWE_U2A1_A2.elf \
 
 MAP_FILES += \
-HWSWE_U2A1_A2_Template.map \
+HWSWE_U2A1_A2.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-HWSWE_U2A1_A2_Template.list \
+HWSWE_U2A1_A2.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: HWSWE_U2A1_A2_Template.elf secondary-outputs
+main-build: HWSWE_U2A1_A2.elf secondary-outputs
 
 # Tool invocations
-HWSWE_U2A1_A2_Template.elf HWSWE_U2A1_A2_Template.map: $(OBJS) $(USER_OBJS) C:\Users\Tim\Documents\Studium\4.Semester\HWSW\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "HWSWE_U2A1_A2_Template.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Tim\Documents\Studium\4.Semester\HWSW\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HWSWE_U2A1_A2_Template.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+HWSWE_U2A1_A2.elf HWSWE_U2A1_A2.map: $(OBJS) $(USER_OBJS) C:\Users\Tim\Documents\Studium\4.Semester\HWSW\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "HWSWE_U2A1_A2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Tim\Documents\Studium\4.Semester\HWSW\HWSWE_U2A1_A2_Template\STM32H743ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="HWSWE_U2A1_A2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -84,14 +84,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-HWSWE_U2A1_A2_Template.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "HWSWE_U2A1_A2_Template.list"
+HWSWE_U2A1_A2.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "HWSWE_U2A1_A2.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) HWSWE_U2A1_A2_Template.elf HWSWE_U2A1_A2_Template.list HWSWE_U2A1_A2_Template.map default.size.stdout
+	-$(RM) HWSWE_U2A1_A2.elf HWSWE_U2A1_A2.list HWSWE_U2A1_A2.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

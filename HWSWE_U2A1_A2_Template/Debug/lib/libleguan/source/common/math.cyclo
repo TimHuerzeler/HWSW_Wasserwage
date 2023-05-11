@@ -1,0 +1,6 @@
+math.c:30:10:MATH_ClampUl	3
+math.c:37:9:MATH_ClampL	3
+math.c:44:11:MATH_ClampF	3
+math.c:51:11:MATH_ClampD	3
+math.c:58:8:MATH_Sign	3
+math.c:67:9:MATH_BinaryToBCD	1

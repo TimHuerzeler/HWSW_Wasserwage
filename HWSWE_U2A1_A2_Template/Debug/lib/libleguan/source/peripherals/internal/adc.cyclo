@@ -1,0 +1,6 @@
+adc.c:37:27:GetHandle	6
+adc.c:52:16:GetResolution	6
+adc.c:66:10:ADC_Init	1
+adc.c:72:10:ADC_StartMeasurement	8
+adc.c:103:6:ADC_IsReady	1
+adc.c:107:10:ADC_GetValue	3

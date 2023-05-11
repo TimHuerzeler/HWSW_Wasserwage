@@ -1,0 +1,346 @@
+
+HWSWE_U9A2.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   00000298  08000000  08000000  00010000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         00000164  08000298  08000298  00010298  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000000  080003fc  080003fc  0002001c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .init_array   00000004  080003fc  080003fc  000103fc  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .fini_array   00000004  08000400  08000400  00010400  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  5 .data         0000001c  20000000  08000404  00020000  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .bss          0000001c  2000001c  08000420  0002001c  2**2
+                  ALLOC
+  7 ._user_heap_stack 00000600  20000038  08000420  00020038  2**0
+                  ALLOC
+  8 .ARM.attributes 0000002e  00000000  00000000  0002001c  2**0
+                  CONTENTS, READONLY
+  9 .debug_line   000000ee  00000000  00000000  0002004a  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_info   00000048  00000000  00000000  00020138  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .debug_abbrev 00000026  00000000  00000000  00020180  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_aranges 00000048  00000000  00000000  000201a8  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_str    0000007f  00000000  00000000  000201f0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_ranges 00000020  00000000  00000000  00020270  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_frame  0000002c  00000000  00000000  00020290  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+08000298 <__do_global_dtors_aux>:
+ 8000298:	b510      	push	{r4, lr}
+ 800029a:	4c05      	ldr	r4, [pc, #20]	; (80002b0 <__do_global_dtors_aux+0x18>)
+ 800029c:	7823      	ldrb	r3, [r4, #0]
+ 800029e:	b933      	cbnz	r3, 80002ae <__do_global_dtors_aux+0x16>
+ 80002a0:	4b04      	ldr	r3, [pc, #16]	; (80002b4 <__do_global_dtors_aux+0x1c>)
+ 80002a2:	b113      	cbz	r3, 80002aa <__do_global_dtors_aux+0x12>
+ 80002a4:	4804      	ldr	r0, [pc, #16]	; (80002b8 <__do_global_dtors_aux+0x20>)
+ 80002a6:	f3af 8000 	nop.w
+ 80002aa:	2301      	movs	r3, #1
+ 80002ac:	7023      	strb	r3, [r4, #0]
+ 80002ae:	bd10      	pop	{r4, pc}
+ 80002b0:	2000001c 	.word	0x2000001c
+ 80002b4:	00000000 	.word	0x00000000
+ 80002b8:	080003e4 	.word	0x080003e4
+
+080002bc <frame_dummy>:
+ 80002bc:	b508      	push	{r3, lr}
+ 80002be:	4b03      	ldr	r3, [pc, #12]	; (80002cc <frame_dummy+0x10>)
+ 80002c0:	b11b      	cbz	r3, 80002ca <frame_dummy+0xe>
+ 80002c2:	4903      	ldr	r1, [pc, #12]	; (80002d0 <frame_dummy+0x14>)
+ 80002c4:	4803      	ldr	r0, [pc, #12]	; (80002d4 <frame_dummy+0x18>)
+ 80002c6:	f3af 8000 	nop.w
+ 80002ca:	bd08      	pop	{r3, pc}
+ 80002cc:	00000000 	.word	0x00000000
+ 80002d0:	20000020 	.word	0x20000020
+ 80002d4:	080003e4 	.word	0x080003e4
+
+080002d8 <asm_strlen>:
+ * @return  r0: string length
+ * @remark  r1 used to point to actual char in string
+ *          r2 holds actual char in string
+ */
+asm_strlen:
+    MOV     r1,r0                   @ r1 points to actual char
+ 80002d8:	4601      	mov	r1, r0
+    MOV     r0,#0                   @ r0 holds number of char in the string
+ 80002da:	f04f 0000 	mov.w	r0, #0
+
+080002de <while_strlen>:
+while_strlen:
+    LDRB    r2,[r1],#1              @ read actual char, increment string pointer
+ 80002de:	f811 2b01 	ldrb.w	r2, [r1], #1
+    CMP     r2,#0                   @ check if actual char is '\0' (stringend)
+ 80002e2:	2a00      	cmp	r2, #0
+    BEQ     endwhile_strlen         @ branch if stringend
+ 80002e4:	d002      	beq.n	80002ec <endwhile_strlen>
+    ADD     r0,r0,#1                @ increment char counter
+ 80002e6:	f100 0001 	add.w	r0, r0, #1
+    BNE     while_strlen            @ --> next char
+ 80002ea:	d1f8      	bne.n	80002de <while_strlen>
+
+080002ec <endwhile_strlen>:
+endwhile_strlen:
+    MOV     pc,lr                   @ stringend, return
+ 80002ec:	46f7      	mov	pc, lr
+
+080002ee <asm_strlen2>:
+ * @return  r0: string length
+ * @remark  r1 used to point to actual char in string
+ *          r2 holds actual char in string
+ */
+asm_strlen2:
+    MOV     r1,r0                   @ r1 points to actual char
+ 80002ee:	4601      	mov	r1, r0
+    MOV     r0,#-1                  @ r0 holds number of char in the string
+ 80002f0:	f04f 30ff 	mov.w	r0, #4294967295
+
+080002f4 <while_strlen2>:
+while_strlen2:
+    ADD     r0,r0,#1                @ increment strlen
+ 80002f4:	f100 0001 	add.w	r0, r0, #1
+    LDRB    r2,[r1],#1              @ read actual char, increment string pointer
+ 80002f8:	f811 2b01 	ldrb.w	r2, [r1], #1
+    CMP     r2,#0                   @ check if actual char is '\0' stringend
+ 80002fc:	2a00      	cmp	r2, #0
+    BNE     while_strlen2           @ if not stringend, --> next char
+ 80002fe:	d1f9      	bne.n	80002f4 <while_strlen2>
+
+08000300 <endwhile_strlen2>:
+endwhile_strlen2:
+    MOV     pc,lr                   @ stringend, return
+ 8000300:	46f7      	mov	pc, lr
+
+08000302 <asm_strlen3>:
+ * @return  r0: string length
+ * @remark  r1 used to point to actual address in string
+ *          r2 holds actual char value
+ */
+asm_strlen3:
+    MOV     r1,r0                   @ r1 points to actual char
+ 8000302:	4601      	mov	r1, r0
+
+08000304 <while_strlen3>:
+while_strlen3:
+    LDRB    r2,[r1],#1              @ read actual char, increment string pointer
+ 8000304:	f811 2b01 	ldrb.w	r2, [r1], #1
+    CMP     r2,#0                   @ check if actual char is '\0' stringend
+ 8000308:	2a00      	cmp	r2, #0
+    BNE     while_strlen3           @ if not stringend, --> next char
+ 800030a:	d1fb      	bne.n	8000304 <while_strlen3>
+
+0800030c <endwhile_strlen3>:
+endwhile_strlen3:
+    SUB     r0,r1,r0                @ number of char is difference of addresses
+ 800030c:	eba1 0000 	sub.w	r0, r1, r0
+    SUB     r0,r0,#1                @ correct difference from postincrement of LDRB
+ 8000310:	f1a0 0001 	sub.w	r0, r0, #1
+    MOV     pc,lr                   @ stringend, return
+ 8000314:	46f7      	mov	pc, lr
+
+08000316 <main>:
+/**
+ * endless loop
+ */
+loop:
+    # calculate stringlength using different optimizations of asm_strlen
+    LDR     r0,=str1                @ load r0 (parameter) with string base address
+ 8000316:	4809      	ldr	r0, [pc, #36]	; (800033c <main+0x26>)
+    BL      asm_strlen              @ call subroutine
+ 8000318:	f7ff ffde 	bl	80002d8 <asm_strlen>
+    LDR     r0,=str2                @ load r0 (parameter) with string base address
+ 800031c:	4808      	ldr	r0, [pc, #32]	; (8000340 <main+0x2a>)
+    BL      asm_strlen2             @ call subroutine
+ 800031e:	f7ff ffe6 	bl	80002ee <asm_strlen2>
+    LDR     r0,=str2                @ load r0 (parameter) with string base address
+ 8000322:	4807      	ldr	r0, [pc, #28]	; (8000340 <main+0x2a>)
+    BL      asm_strlen3             @ call subroutine
+ 8000324:	f7ff ffed 	bl	8000302 <asm_strlen3>
+
+    #test if zero-string runs correct
+    LDR     r0,=strzero             @ load r0 (parameter) with string base address
+ 8000328:	4806      	ldr	r0, [pc, #24]	; (8000344 <main+0x2e>)
+    BL      asm_strlen              @ call subroutine
+ 800032a:	f7ff ffd5 	bl	80002d8 <asm_strlen>
+    LDR     r0,=strzero             @ load r0 (parameter) with string base address
+ 800032e:	4805      	ldr	r0, [pc, #20]	; (8000344 <main+0x2e>)
+    BL      asm_strlen2             @ call subroutine
+ 8000330:	f7ff ffdd 	bl	80002ee <asm_strlen2>
+    LDR     r0,=strzero             @ load r0 (parameter) with string base address
+ 8000334:	4803      	ldr	r0, [pc, #12]	; (8000344 <main+0x2e>)
+    BL      asm_strlen3             @ call subroutine
+ 8000336:	f7ff ffe4 	bl	8000302 <asm_strlen3>
+
+    B       loop
+ 800033a:	e7ec      	b.n	8000316 <main>
+    LDR     r0,=str1                @ load r0 (parameter) with string base address
+ 800033c:	20000000 	.word	0x20000000
+    LDR     r0,=str2                @ load r0 (parameter) with string base address
+ 8000340:	20000004 	.word	0x20000004
+    LDR     r0,=strzero             @ load r0 (parameter) with string base address
+ 8000344:	20000019 	.word	0x20000019
+
+08000348 <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 8000348:	480d      	ldr	r0, [pc, #52]	; (8000380 <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 800034a:	4685      	mov	sp, r0
+/* Call the clock system intitialization function.*/
+  bl  SystemInit
+ 800034c:	f3af 8000 	nop.w
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 8000350:	480c      	ldr	r0, [pc, #48]	; (8000384 <LoopForever+0x6>)
+  ldr r1, =_edata
+ 8000352:	490d      	ldr	r1, [pc, #52]	; (8000388 <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 8000354:	4a0d      	ldr	r2, [pc, #52]	; (800038c <LoopForever+0xe>)
+  movs r3, #0
+ 8000356:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 8000358:	e002      	b.n	8000360 <LoopCopyDataInit>
+
+0800035a <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 800035a:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 800035c:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 800035e:	3304      	adds	r3, #4
+
+08000360 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 8000360:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 8000362:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 8000364:	d3f9      	bcc.n	800035a <CopyDataInit>
+
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 8000366:	4a0a      	ldr	r2, [pc, #40]	; (8000390 <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 8000368:	4c0a      	ldr	r4, [pc, #40]	; (8000394 <LoopForever+0x16>)
+  movs r3, #0
+ 800036a:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 800036c:	e001      	b.n	8000372 <LoopFillZerobss>
+
+0800036e <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 800036e:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 8000370:	3204      	adds	r2, #4
+
+08000372 <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 8000372:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 8000374:	d3fb      	bcc.n	800036e <FillZerobss>
+
+/* Call static constructors */
+  bl __libc_init_array
+ 8000376:	f000 f811 	bl	800039c <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
+ 800037a:	f7ff ffcc 	bl	8000316 <main>
+
+0800037e <LoopForever>:
+
+LoopForever:
+    b LoopForever
+ 800037e:	e7fe      	b.n	800037e <LoopForever>
+  ldr   r0, =_estack
+ 8000380:	20020000 	.word	0x20020000
+  ldr r0, =_sdata
+ 8000384:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 8000388:	2000001c 	.word	0x2000001c
+  ldr r2, =_sidata
+ 800038c:	08000404 	.word	0x08000404
+  ldr r2, =_sbss
+ 8000390:	2000001c 	.word	0x2000001c
+  ldr r4, =_ebss
+ 8000394:	20000038 	.word	0x20000038
+
+08000398 <ADC1_2_IRQHandler>:
+ * @retval : None
+*/
+  .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 8000398:	e7fe      	b.n	8000398 <ADC1_2_IRQHandler>
+	...
+
+0800039c <__libc_init_array>:
+ 800039c:	b570      	push	{r4, r5, r6, lr}
+ 800039e:	4d0d      	ldr	r5, [pc, #52]	; (80003d4 <__libc_init_array+0x38>)
+ 80003a0:	4c0d      	ldr	r4, [pc, #52]	; (80003d8 <__libc_init_array+0x3c>)
+ 80003a2:	1b64      	subs	r4, r4, r5
+ 80003a4:	10a4      	asrs	r4, r4, #2
+ 80003a6:	2600      	movs	r6, #0
+ 80003a8:	42a6      	cmp	r6, r4
+ 80003aa:	d109      	bne.n	80003c0 <__libc_init_array+0x24>
+ 80003ac:	4d0b      	ldr	r5, [pc, #44]	; (80003dc <__libc_init_array+0x40>)
+ 80003ae:	4c0c      	ldr	r4, [pc, #48]	; (80003e0 <__libc_init_array+0x44>)
+ 80003b0:	f000 f818 	bl	80003e4 <_init>
+ 80003b4:	1b64      	subs	r4, r4, r5
+ 80003b6:	10a4      	asrs	r4, r4, #2
+ 80003b8:	2600      	movs	r6, #0
+ 80003ba:	42a6      	cmp	r6, r4
+ 80003bc:	d105      	bne.n	80003ca <__libc_init_array+0x2e>
+ 80003be:	bd70      	pop	{r4, r5, r6, pc}
+ 80003c0:	f855 3b04 	ldr.w	r3, [r5], #4
+ 80003c4:	4798      	blx	r3
+ 80003c6:	3601      	adds	r6, #1
+ 80003c8:	e7ee      	b.n	80003a8 <__libc_init_array+0xc>
+ 80003ca:	f855 3b04 	ldr.w	r3, [r5], #4
+ 80003ce:	4798      	blx	r3
+ 80003d0:	3601      	adds	r6, #1
+ 80003d2:	e7f2      	b.n	80003ba <__libc_init_array+0x1e>
+ 80003d4:	080003fc 	.word	0x080003fc
+ 80003d8:	080003fc 	.word	0x080003fc
+ 80003dc:	080003fc 	.word	0x080003fc
+ 80003e0:	08000400 	.word	0x08000400
+
+080003e4 <_init>:
+ 80003e4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80003e6:	bf00      	nop
+ 80003e8:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80003ea:	bc08      	pop	{r3}
+ 80003ec:	469e      	mov	lr, r3
+ 80003ee:	4770      	bx	lr
+
+080003f0 <_fini>:
+ 80003f0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 80003f2:	bf00      	nop
+ 80003f4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 80003f6:	bc08      	pop	{r3}
+ 80003f8:	469e      	mov	lr, r3
+ 80003fa:	4770      	bx	lr
