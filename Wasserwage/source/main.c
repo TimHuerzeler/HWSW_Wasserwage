@@ -96,6 +96,7 @@ void lv_example_meter_1(void * meter)
     lv_meter_set_scale_ticks(meter, 41, 2, 10, lv_palette_main(LV_PALETTE_GREY));
     lv_meter_set_scale_major_ticks(meter, 8, 4, 15, lv_color_black(), 10);
 
+
     lv_meter_indicator_t * indic;
 
     /*Add a blue arc to the start*/
