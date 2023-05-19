@@ -99,6 +99,8 @@ void lv_example_meter_1(void * meter)
 
     lv_meter_indicator_t * indic;
 
+
+    //commentforgit
     /*Add a blue arc to the start*/
     indic = lv_meter_add_arc(meter, 3, lv_palette_main(LV_PALETTE_BLUE), 0);
     lv_meter_set_indicator_start_value(meter, indic, 0);
