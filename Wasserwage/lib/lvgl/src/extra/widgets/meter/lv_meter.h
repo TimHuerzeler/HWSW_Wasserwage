@@ -142,8 +142,7 @@ lv_meter_scale_t * lv_meter_add_scale(lv_obj_t * obj);
  * @param len       length of tick lines
  * @param color     color of tick lines
  */
-void lv_meter_set_scale_ticks(lv_obj_t * obj, lv_meter_scale_t * scale, uint16_t cnt, uint16_t width, uint16_t len,
-                              lv_color_t color);
+void lv_meter_set_scale_ticks(lv_obj_t * obj, lv_meter_scale_t * scale, uint16_t cnt, uint16_t width, uint16_t len, lv_color_t color);
 
 /**
  * Make some "normal" ticks major ticks and set their attributes.
@@ -156,8 +155,7 @@ void lv_meter_set_scale_ticks(lv_obj_t * obj, lv_meter_scale_t * scale, uint16_t
  * @param color         color of the major ticks
  * @param label_gap     gap between the major ticks and the labels
  */
-void lv_meter_set_scale_major_ticks(lv_obj_t * obj, lv_meter_scale_t * scale, uint16_t nth, uint16_t width,
-                                    uint16_t len, lv_color_t color, int16_t label_gap);
+void lv_meter_set_scale_major_ticks(lv_obj_t * obj, lv_meter_scale_t * scale, uint16_t nth, uint16_t width, uint16_t len, lv_color_t color, int16_t label_gap);
 
 /**
  * Set the value and angular range of a scale.
