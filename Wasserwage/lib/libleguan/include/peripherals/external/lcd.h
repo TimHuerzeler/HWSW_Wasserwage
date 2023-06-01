@@ -21,7 +21,7 @@
 /**
   *  @file lcd.h
   *  @ingroup peripherals
-  *  @author Nikolaij Saegesser
+  *  @author Nikolaij Saegesser, Nicola Stettler, Serge Weidmann
   *  @brief Display MMIO Registers
   */
 
@@ -30,7 +30,6 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif
-
 
 /* Includes */
 #include "common/types.h"
@@ -47,6 +46,7 @@ extern "C" {
 #define LCD                 MMIO_MAP(LCD_BASE_ADDRESS, LCD_MemoryMap_t)
 
 /** LCD Commands **/
+#define LCD_CMD_RESET								0x01
 #define LCD_CMD_SET_DISPLAY_OFF                     0x28
 #define LCD_CMD_SET_DISPLAY_ON                      0x29
 #define LCD_CMD_SET_ADDRESS_MODE                    0x36
@@ -76,26 +76,34 @@ extern "C" {
 #define LCD_TOUCH_CMD_MEASURE_X                     0x52
 #define LCD_TOUCH_CMD_MEASURE_XY                    0x70
 
-
 /* Types */
 
 #define LCD_COLOR(r, g, b) BGR565_COLOR(r, g, b)
 typedef BGR565_t LCD_Color_t;
 
 typedef struct LEGUAN_PACKED {
-    volatile reg16_t cmd;
-    union {
-        volatile uint8_t data8;
-        volatile uint16_t data16;
-    };
+	volatile reg16_t cmd;
+#if defined(LEGUAN_FIRMWARE_CPU)
+    uint8_t padding[0x100000 - sizeof(reg16_t)];
+#endif
+	union {
+		volatile uint8_t data8;
+		volatile uint16_t data16;
+	};
 } LCD_MemoryMap_t;
-static_assert(sizeof(LCD_MemoryMap_t) == 4, "LCDMemoryMap type definition invalid!");
 
 typedef void (*LCD_TouchCallback_t)(void);
 
 typedef struct {
-    uint16_t x, y;
+	uint16_t x, y;
 } LCD_TouchPosition_t;
+
+typedef enum {
+	North,
+	East,
+	South,
+	West
+} LCD_Orientation_t;
 
 /* Functions */
 
@@ -114,6 +122,32 @@ result_t LCD_Init(void);
  */
 void LCD_Stream(const char *string, bool new_line);
 
+/**
+ * @brief Sets the cursor X position for console logging
+ * @param x X coordinate of the cursor
+ */
+void LCD_SetCursorX(uint16_t x);
+
+/**
+ * @brief Sets the cursor Y position for console logging
+ * @param y Y coordinate of the cursor
+ */
+void LCD_SetCursorY(uint16_t y);
+
+/**
+ * @brief Sets the area, which is to be scrolled. Note that only the whole width of the screen can be scrolled.
+ * @param y1 Start of the scrolling area
+ * @param y2 End of the scrolling area
+ * @return Status result
+ */
+result_t LCD_SetScrollArea(uint16_t y1, uint16_t y2);
+
+/**
+ * @brief Scrolls the area defined with LCD_SetScrollArea().
+ * @param lines Amount of lines the defined area is scrolled
+ * @return Status result
+ */
+result_t LCD_Scroll(int16_t lines);
 
 /**
  * @brief Sets the LCD foreground color (used for primitives, text, etc)
@@ -127,6 +161,26 @@ void LCD_SetForegroundColor(color_t color);
  */
 void LCD_SetBackgroundColor(color_t color);
 
+/**
+ * @brief Returns the actual set Foreground Color
+ * @param *color Pointer to the color Variable, in which the actual foreground color is to be stored.
+ */
+void LCD_GetForegroundColor(color_t *color);
+
+/**
+ * @brief Returns the set Background Color
+ * @param *color Pointer to the color Variable, in which the actual background color is to be stored.
+ */
+void LCD_GetBackgroundColor(color_t *color);
+
+/**
+ * @brief Calculates the RGB565 Color out of RGB888 values and returns the struct with the values.
+ * @param r RGB888 Red Value
+ * @param g RGB888 Green Value
+ * @param b RGB888 Blue Value
+ * @return actual Background Color
+ */
+color_t LCD_ColorConvert(uint8_t r, uint8_t g, uint8_t b);
 
 /**
  * @brief Overwrites all content with the background color
@@ -142,17 +196,29 @@ void LCD_Clear(void);
 result_t LCD_Pixel(uint16_t x, uint16_t y);
 
 /**
- * @brief Draws a rectangle with the current foreground color
- * @param x Top left corner X coordinate
- * @param y Top left corner Y coordinate
+ * @brief Draws a filled rectangle with the current foreground color
+ * @param x X coordinate of the top left corner
+ * @param y Y coordinate of the top left corner
  * @param width Rectangle width
  * @param height Rectangle height
+ * @param angle Angle by which the rectangle is rotated (0 for no rotation)
  * @return Status result
  */
-result_t LCD_Rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
+result_t LCD_FilledRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t angle);
 
 /**
- * @brief Draws a line with the current foreground color
+ * @brief Draws the outlines of a rectangle. If the Rectangle is to be tilted, the turning point is the top left corner.
+ * @param x X coordinate of the top left corner
+ * @param y Y coordinate of the top left corner
+ * @param width Rectangle width
+ * @param height Rectangle height
+ * @param angle	Angle by which the rectangle is rotated (0 for no rotation)
+ * @return Status result
+ */
+result_t LCD_Rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t angle);
+
+/**
+ * @brief Draws a line from start to end with the current foreground color
  * @param x1 X coordinate of the start of the line
  * @param y1 Y coordinate of the start of the line
  * @param x2 X coordinate of the end of the line
@@ -162,13 +228,63 @@ result_t LCD_Rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
 result_t LCD_Line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 
 /**
- * @brief Draws a circle with the current foreground color
+ * @brief Draws a tilted Line with a defined length. The turning point is the start coordinates of the line. (Horizontal Line: angle = 0, Vertical Line: angle = 90)
+ * @param x X coordinate of the Line's starting point
+ * @param y Y coordinate of the Line's starting point
+ * @param l	Length of the line
+ * @param angle	Turning angle in degrees of the line
+ * @return Status result
+ */
+result_t LCD_TiltedLine(uint16_t x, uint16_t y, uint16_t l, uint16_t angle);
+
+/**
+ * @brief Draws the outline of a circle with the current foreground color
  * @param center_x X coordinate of the center of the circle
  * @param center_y Y coordinate of the center of the circle
  * @param radius Circle radius
  * @return Status result
  */
 result_t LCD_Circle(uint16_t center_x, uint16_t center_y, uint16_t radius);
+
+/**
+ * @brief Draws a filled circle with the current foreground color
+ * @param center_x X coordinate of the center of the circle
+ * @param center_y Y coordinate of the center of the circle
+ * @param radius Circle radius
+ * @return Status result
+ */
+result_t LCD_FilledCircle(uint16_t center_x, uint16_t center_y, uint16_t radius);
+
+/**
+ * @brief Draws the outlines of a Triangle
+ * @param x0-x2 X coordinates of the triangle's edges
+ * @param y0-y2 Y coordinates of the triangle's edges
+ * @return Status result
+ */
+result_t LCD_Triangle(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+
+/**
+ * @brief Draws the outlines of an equilateral Triangle.
+ * @param x X coordinate of the triangle's center
+ * @param y Y coordinate of the triangle's center
+ * @param s	Length of the triangle's sides
+ * @param orientation Orientation of the triangle.
+ * @return Status result
+ */
+result_t LCD_EquiTriangle(uint16_t x, uint16_t y, uint16_t s, LCD_Orientation_t orientation);
+
+/**
+ * @brief Sets the Size of the font.
+ * @param size New size of the font
+ * @return Status result
+ */
+result_t LCD_SetFontSize(uint16_t size);
+
+/**
+ * @brief Returns the current font size.
+ * @return Font size
+ */
+uint16_t LCD_GetFontSize();
 
 /**
  * @brief Draws a ASCII character with the current foreground color
@@ -187,6 +303,16 @@ result_t LCD_Character(uint16_t x, uint16_t y, char c);
  * @return Status result
  */
 result_t LCD_String(uint16_t start_x, uint16_t start_y, const char *string);
+
+/**
+ * @brief Draws a formatted string with the current foreground color
+ * @param start_x Start X coordinate of the string
+ * @param start_y Start Y coordinate of the string
+ * @param fmt Format specifier
+ * @param ... Format arguments
+ * @return Status result
+ */
+result_t LCD_StringFormat(uint16_t start_x, uint16_t start_y, const char *fmt, ...);
 
 /**
  * @brief Draws a NULL terminated string with the current foreground color continuing where lcd_string left off before
@@ -218,6 +344,19 @@ void LCD_EnableDrawMode(void);
  */
 result_t LCD_DrawBuffer(LCD_Color_t *buffer, size_t size);
 
+/** Bitmap **/
+/**
+ * @brief Draws a Bitmap included as .c file.
+ * @param image Pointer to the Pixel array
+ * @param x X coordinate of the top left corner
+ * @param x Y coordinate of the top left corner
+ * @param width With of the image in Pixels
+ * @param height Height of the image in Pixels
+ * @param orientation Direction in which the picture is rotated
+ * @return Status result
+ */
+result_t LCD_DrawBitmap(const uint16_t *image, uint16_t x, uint16_t y, uint16_t width, uint16_t height, LCD_Orientation_t orientation);
+
 /** Touch **/
 
 /**
@@ -225,6 +364,16 @@ result_t LCD_DrawBuffer(LCD_Color_t *buffer, size_t size);
  * @return Status result
  */
 result_t LCD_TouchInit(void);
+
+/**
+ * @brief Sets the touch calibration values
+ * @param minX Minimum X position
+ * @param minY Minimum Y position
+ * @param maxX Maximum X position
+ * @param maxY Maximum Y position
+ * @return Status result
+ */
+result_t LCD_TouchSetCalibrationValues(uint16_t minX, uint16_t minY, uint16_t maxX, uint16_t maxY);
 
 /**
  * @brief Initiates a touch measurement
@@ -243,7 +392,6 @@ void LCD_TouchSetTouchCallback(LCD_TouchCallback_t callback);
  * @return Status result
  */
 result_t LCD_TouchGetPosition(LCD_TouchPosition_t *position);
-
 
 #if defined(__cplusplus)
 }
